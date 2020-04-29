@@ -1,0 +1,29 @@
+{
+  "name": "toDoList",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/13DNick/toDoList.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/13DNick/toDoList/issues"
+  },
+  "homepage": "https://github.com/13DNick/toDoList#readme",
+  "devDependencies": {
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
+  },
+  "dependencies": {
+    "circular-dependency-plugin": "^5.2.0",
+    "jquery": "^3.5.0",
+    "lodash": "^4.17.15"
+  },
+  "description": ""
+}
