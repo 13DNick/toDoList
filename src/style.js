@@ -21,8 +21,16 @@ newToDoButton.style.marginRight = "20px";
 newToDoButton.style.marginTop = "25px";
 newToDoButton.style.height = "50px";
 
+//dynamic div
+const dynamic = $("#dynamic");
+dynamic.hide();
 
 
+function styleDynamicDiv(){
+    const dynamicDiv = document.querySelector("#dynamic");
+    dynamicDiv.style.display = "grid";
+    dynamicDiv.style.gridTemplateColumns = "60% 40%";
+}
 
 
 
@@ -30,10 +38,9 @@ function styleAllButtons(){
     const allButtons = document.querySelectorAll("button");
     allButtons.forEach((button) => {
         button.style.cursor = "pointer";
-        button.style.float = "right";
     });
 };
 
-export {styleAllButtons};
+export {styleAllButtons, styleDynamicDiv};
 
 

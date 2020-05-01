@@ -8,10 +8,14 @@ import {styleAllButtons} from "./style";
 const projectArray = [];
 
 
-const toDoFactory = (title, details, due) => {
+const toDoFactory = (title, due) => {
+    let status = false;
+
+    const complete = () => {
+        status = true;
+    };
     
-    
-    return {title, details, due};
+    return {title, status, due};
 };
 
 const projectFactory = (title, details, due) => {
@@ -25,11 +29,8 @@ const projectFactory = (title, details, due) => {
        return title + " " + details + " " + due;
     };
 
-    //here
-    const updateArray = (index) => {
-        console.log(index);
-        list.splice(index,1);
-        console.log(list);
+    const updateArray = (index, project) => {
+        project.list.splice(index,1);
     };
     
     return {title, details, due, toString, addToDo, list, updateArray};
@@ -44,4 +45,4 @@ displayProjectArray(projectArray);
 styleAllButtons();
 
 
-export{toDoFactory, projectFactory}
+export{toDoFactory, projectFactory, projectArray}
