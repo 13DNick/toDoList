@@ -28,10 +28,29 @@ dynamic.hide();
 
 function styleDynamicDiv(){
     const dynamicDiv = document.querySelector("#dynamic");
+    const leftSide = document.querySelector("#leftSide");
+    const rightSide = document.querySelector("#rightSide");
+    leftSide.style.border = 'solid';
+
     dynamicDiv.style.display = "grid";
     dynamicDiv.style.gridTemplateColumns = "60% 40%";
-}
+};
 
+function styleToDoWindowElements(){
+    const titleInput = document.querySelector("#toDoTitleInput");
+    const dateInput = document.querySelector("#toDoDateInput");
+    dateInput.style.float = "left";
+    titleInput.style.width = "95%";
+};
+
+function styleNewProjectWindowElements() {
+    const titleInput = document.querySelector("#newProjectTitleInput");
+    const detailsInput = document.querySelector("#newProjectDetailsInput");
+    const dateInput = document.querySelector("#newProjectDateInput");
+    detailsInput.style.float = "left";
+    detailsInput.style.width = "98%";
+    titleInput.style.width = "95%";
+};
 
 
 function styleAllButtons(){
@@ -41,6 +60,7 @@ function styleAllButtons(){
     });
 };
 
-export {styleAllButtons, styleDynamicDiv};
+export {styleAllButtons, styleDynamicDiv, 
+        styleToDoWindowElements, styleNewProjectWindowElements};
 
 

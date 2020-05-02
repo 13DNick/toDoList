@@ -4,16 +4,19 @@ import  "./style";
 import {passProject} from "./logic";
 
 const projectList = document.querySelector("#projectList");
+const projectListJ = $("#projectList");
 const projectView = document.querySelector("#currentProjectContent");
+const currentProjectContentJ = $("#currentProjectContent");
 
 function displayProjectArray(projectArray){
+    projectListJ.empty();
     projectArray.forEach((project) => {
-        projectList.append(formatProjectInProjectList(project));
+        projectList.append(formatProjectInProjectList(project, projectArray));
     });
 };
         
 
-function formatProjectInProjectList(project){
+function formatProjectInProjectList(project, projectArray){
     const projectObjectArray = Object.values(project);
     const div = document.createElement("div");
     const projectInfoDiv = document.createElement("div");
@@ -32,6 +35,24 @@ function formatProjectInProjectList(project){
         }
         const button = document.createElement("button");
         button.textContent = "Remove";
+
+        //remove project button click
+        button.addEventListener("click", () => {
+            //update Project array and refresh display
+            _.pull(projectArray, project);
+            displayProjectArray(projectArray);
+
+            //if project is currently displayed in view, clear view & update header
+            if(project.title === document.querySelector("#currentProjectHeader").textContent){
+                currentProjectContentJ.empty();
+                document.querySelector("#currentProjectHeader").textContent = "Choose Project";
+                if(_.isEmpty(projectArray)){
+                    document.querySelector("#currentProjectHeader").textContent = "No Projects to view";
+                };
+            };
+        });
+
+
         buttonDiv.style.border = "solid";
         buttonDiv.append(createViewProjectButton(project), button);
     }
@@ -40,7 +61,7 @@ function formatProjectInProjectList(project){
     div.append(projectInfoDiv, buttonDiv);
     
     return div;
-}
+};
 
 function createViewProjectButton(project){
     const button = document.createElement("button");
@@ -53,7 +74,7 @@ function createViewProjectButton(project){
         displayProjectInView(project);
     })
     return button;
-}
+};
 
 function displayProjectInView(project){
     if(project.title != document.querySelector("#currentProjectHeader").textContent){
@@ -95,7 +116,7 @@ function updateToDos(project){
         const title = document.querySelector("#currentProjectHeader");
         title.textContent = project.title;
         displayToDos(project);
-;}
+};
         
         
         
@@ -103,4 +124,4 @@ function updateToDos(project){
     
             
 
-export {displayProjectArray};
+export {displayProjectArray, updateToDos};
