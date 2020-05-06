@@ -56,7 +56,7 @@ const populate = () => {
     quickList.addToDo(toDo1);
     quickList.addToDo(toDo2);
     quickList.addToDo(toDo3);
-    projectArray.push(quickList, quickList2);
+    projectArray.push(quickList);
     passProject(quickList);
 };
 
