@@ -58,6 +58,7 @@ const populate = () => {
     quickList.addToDo(toDo3);
     projectArray.push(quickList);
     passProject(quickList);
+    
 };
 
 const rebuild = (projectArray) => {
