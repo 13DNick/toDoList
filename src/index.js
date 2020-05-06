@@ -50,9 +50,8 @@ const projectFactory = (title, details, due) => {
 
 const populate = () => {
     const quickList = projectFactory("Quick List", "add ur shit", "ASAP");
-    const quickList2 = projectFactory("Quick List2", "add ur shit2", "ASAP2");
     const toDo1 = toDoFactory("wash dishes", "2020-05-19");
-    const toDo2 = toDoFactory("wash toilet", "2020-05-19");
+    const toDo2 = toDoFactory("choke the chicken", "2020-05-19");
     const toDo3 = toDoFactory("wash car", "2020-05-19");
     quickList.addToDo(toDo1);
     quickList.addToDo(toDo2);
