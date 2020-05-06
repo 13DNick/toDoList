@@ -1,6 +1,12 @@
 import * as $ from "jquery";
 
 
+//title
+const pageTitle = document.querySelector("#pageTitle");
+pageTitle.style.textAlign = "center";
+pageTitle.style.backgroundColor = "#ccffff";
+
+
 //split header divs
 const headers = document.querySelector("#headers");
 headers.style.display = "grid";
