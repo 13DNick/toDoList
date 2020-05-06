@@ -1,11 +1,19 @@
 import * as $ from "jquery";
-import "./logic";
-import {displayProjectArray} from  "./display";
+import {getProjectFromView, passProject} from "./logic";
+import {displayProjectArray, displayProjectInView} from  "./display";
 import {styleAllButtons} from "./style";
 
 
+Storage.prototype.setObj = function(key, obj) {
+    return this.setItem(key, JSON.stringify(obj));
+};
+Storage.prototype.getObj = function(key) {
+    return JSON.parse(this.getItem(key));
+};
 
-const projectArray = [];
+
+let projectArray = [];
+let tempArray = [];
 
 
 const toDoFactory = (title, due) => {
@@ -40,20 +48,57 @@ const projectFactory = (title, details, due) => {
     return {title, details, due, toString, addToDo, list, updateArray};
 };
 
-const quickList = projectFactory("Quick List", "add ur shit", "tomorrow");
-//quickList.list = ["make money", "fuck bitches"];
-const toDo1 = toDoFactory("wash dishes", "2020-05-19");
-const toDo2 = toDoFactory("wash toilet", "2020-05-19");
-const toDo3 = toDoFactory("wash car", "2020-05-19");
-quickList.addToDo(toDo1);
-quickList.addToDo(toDo2);
-quickList.addToDo(toDo3);
+const populate = () => {
+    const quickList = projectFactory("Quick List", "add ur shit", "ASAP");
+    const quickList2 = projectFactory("Quick List2", "add ur shit2", "ASAP2");
+    const toDo1 = toDoFactory("wash dishes", "2020-05-19");
+    const toDo2 = toDoFactory("wash toilet", "2020-05-19");
+    const toDo3 = toDoFactory("wash car", "2020-05-19");
+    quickList.addToDo(toDo1);
+    quickList.addToDo(toDo2);
+    quickList.addToDo(toDo3);
+    projectArray.push(quickList, quickList2);
+    passProject(quickList);
+};
 
-const anotha1 = projectFactory("test", "add it", "ASAP BITCH");
-projectArray.push(quickList);
-projectArray.push(anotha1);
-displayProjectArray(projectArray);
-styleAllButtons();
+const rebuild = (projectArray) => {
+    projectArray.forEach((project) => {
+        const newProject = projectFactory(project.title, project.details, project.due);
+        project.list.forEach((toDo) => {
+            const newToDo = toDoFactory(toDo.title, toDo.due);
+            newProject.addToDo(newToDo);
+        });
+        tempArray.push(newProject);
+    });
+    projectArray = tempArray;
+    return projectArray;
+};
+
+const startPage = (() => {
+    document.querySelector("#clearStorage").addEventListener("click", () => {
+        localStorage.clear();
+    });
+
+    
+    
+    if(localStorage.projectArray){
+        console.log("loaded from save");
+        projectArray = localStorage.getObj("projectArray");
+        projectArray = rebuild(projectArray);
+        displayProjectArray(projectArray);
+        displayProjectInView(projectArray[0], projectArray);
+        passProject(projectArray[0]);
+        styleAllButtons();
+    } else{
+        console.log("fresh Start");
+        populate();
+        displayProjectArray(projectArray);
+        displayProjectInView(projectArray[0], projectArray);
+        styleAllButtons();
+    };
+    
+    
+})();
 
 
 export{toDoFactory, projectFactory, projectArray, displayProjectArray}

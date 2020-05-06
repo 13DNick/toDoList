@@ -7,10 +7,14 @@ import {toDoFactory,
 import {styleDynamicDiv} from "./style";
 import {createNewToDoWindow, updateToDos, createNewProjectWindow} from "./dynamicController";
 
-let currentProject = "";
+let currentProject = "Quick List";
 const dynamic = $("#dynamic");
 const rightSideJ = $("#rightSide");
 const leftSideJ = $("#leftSide");        
+
+
+
+
 
 function passProject(project){
         currentProject = project;
@@ -103,7 +107,7 @@ function checkProjectInputs() {
 
 
 
-export {passProject};
+export {passProject, getProjectFromView};
 
 
 

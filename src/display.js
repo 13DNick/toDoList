@@ -8,11 +8,36 @@ const projectListJ = $("#projectList");
 const projectView = document.querySelector("#currentProjectContent");
 const currentProjectContentJ = $("#currentProjectContent");
 
+
+const save = (array) => {
+    
+    Storage.prototype.setObj = function(key, obj) {
+        return this.setItem(key, JSON.stringify(obj));
+    };
+    Storage.prototype.getObj = function(key) {
+        return JSON.parse(this.getItem(key));
+    };
+    
+    if(localStorage.projectArray){
+            localStorage.clear();
+            localStorage.setObj("projectArray", array);
+            console.log("overwrite");
+    } else{
+            localStorage.setObj("projectArray", array);
+            console.log("new save");
+    };
+};
+
+
+
+
 function displayProjectArray(projectArray){
     projectListJ.empty();
     projectArray.forEach((project) => {
         projectList.append(formatProjectInProjectList(project, projectArray));
     });
+    save(projectArray);
+    console.log("right side save successful");
 };
         
 
@@ -54,7 +79,7 @@ function formatProjectInProjectList(project, projectArray){
 
 
         buttonDiv.style.border = "solid";
-        buttonDiv.append(createViewProjectButton(project), button);
+        buttonDiv.append(createViewProjectButton(project, projectArray), button);
     }
     div.style.display = "grid";
     div.style.gridTemplateColumns = "75% 25%";
@@ -63,7 +88,7 @@ function formatProjectInProjectList(project, projectArray){
     return div;
 };
 
-function createViewProjectButton(project){
+function createViewProjectButton(project, projectArray){
     const button = document.createElement("button");
     button.textContent = "View";
     button.classList = "viewProjectButton";
@@ -71,20 +96,20 @@ function createViewProjectButton(project){
     button.style.marginBottom = "20px";
     button.addEventListener("click", () => {
         passProject(project);
-        displayProjectInView(project);
+        displayProjectInView(project, projectArray);
     })
     return button;
 };
 
-function displayProjectInView(project){
+function displayProjectInView(project, projectArray){
     if(project.title != document.querySelector("#currentProjectHeader").textContent){
-        updateToDos(project);
+        updateToDos(project, projectArray);
     };
 };
         
    
 
-function displayToDos(project) {
+function displayToDos(project, projectArray) {
         const div = document.createElement("div");
         let i = "0";
         
@@ -99,7 +124,7 @@ function displayToDos(project) {
             
             delButton.addEventListener("click", () => {
                 project.updateArray(delButton.id, project);
-                updateToDos(project);
+                updateToDos(project, projectArray);
             });
             
             delButton.textContent = "Remove";
@@ -110,12 +135,13 @@ function displayToDos(project) {
         projectView.append(div);
 };
     
-function updateToDos(project){
-    const currentProjectContent = $("#currentProjectContent");
+function updateToDos(project, projectArray){
+        const currentProjectContent = $("#currentProjectContent");
         currentProjectContent.empty();
         const title = document.querySelector("#currentProjectHeader");
         title.textContent = project.title;
-        displayToDos(project);
+        displayToDos(project, projectArray);
+        save(projectArray);
 };
         
         
@@ -124,4 +150,4 @@ function updateToDos(project){
     
             
 
-export {displayProjectArray, updateToDos};
+export {displayProjectArray, updateToDos, displayProjectInView};
